@@ -1,7 +1,7 @@
 {
   "name": "payments",
   "version": "1.0.0",
-  "description": "Payments service",
+  "description": "Payments",
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev src/index.ts",

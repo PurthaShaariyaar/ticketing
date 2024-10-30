@@ -1,7 +1,7 @@
 {
   "name": "tickets",
   "version": "1.0.0",
-  "description": "Tickets service",
+  "description": "Tickets",
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
