@@ -1,7 +1,7 @@
 {
   "name": "auth",
   "version": "1.0.0",
-  "description": "",
+  "description": "Authentication service for managing user logins and registration in the ticketing app",
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
