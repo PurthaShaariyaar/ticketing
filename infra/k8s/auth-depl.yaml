@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auths
+  template:
+    metadata:
+      labels:
+        app: auths
+    spec:
+      containers:
+        - name: auths
+          image: purthas/auths
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://auths-mongo-srv:27017/auths'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-new-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auths-srv
+spec:
+  selector:
+    app: auths
+  ports:
+    - name: auths
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

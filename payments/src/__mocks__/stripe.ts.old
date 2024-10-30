@@ -1,0 +1,10 @@
+export const stripe = {
+  paymentMethods: {
+    create: jest.fn().mockResolvedValue({
+      id: 'pm_mockedPaymentMethodId',
+    }),
+  },
+  paymentIntents: {
+    create: jest.fn().mockResolvedValue({})
+  },
+};
