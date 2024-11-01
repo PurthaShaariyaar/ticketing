@@ -2,7 +2,7 @@ name: deploy-auth
 
 on:
   push:
-    branches:
+    branches: 
       - main
     paths:
       - 'auth/**'
@@ -11,10 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: docker build -t purthas/auths ./auth
-      - name: Docker Login
-        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - uses: actions/checkout@v2
+      - run: cd auth && docker build -t purthas/auths .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
