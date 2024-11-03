@@ -1,0 +1,38 @@
+name: deploy-expiration
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "expiration/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+      - name: Build Docker image
+        run: cd expiration && docker build -t purthas/expiration .
+
+      - name: Push Docker image to Docker Hub
+        run: docker push purthas/expiration
+
+      - name: Install DigitalOcean CLI
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Set up Kubernetes configuration
+        run: doctl kubernetes cluster kubeconfig save ticketing
+
+      - name: Restart Kubernetes Deployment
+        run: kubectl rollout restart deployment expiration-depl
