@@ -10,7 +10,7 @@ const PORT = 4000;
 
 const start = async () => {
 
-  console.log('Starting orders service...');
+  console.log('Starting orders...');
 
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
